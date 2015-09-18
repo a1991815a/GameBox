@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="游戏引擎">
+      <UniqueIdentifier>{3fb0302a-c8d7-4a2b-a687-0536950e72b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="外部工具">
+      <UniqueIdentifier>{124e7dcb-b7bd-4580-ab22-f0fc8ba675b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="外部工具\Win32工具">
+      <UniqueIdentifier>{15610aa2-81a5-496c-b53b-e37c76202bad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="外部工具\utils">
+      <UniqueIdentifier>{7453b257-7248-4c6f-a85a-ec617ca3b012}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="外部工具\MemoryPool">
+      <UniqueIdentifier>{48b0d8a6-a325-45e3-9a53-bab39fbe1d52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="游戏引擎\内存管理">
+      <UniqueIdentifier>{44502c09-233d-4295-a248-932a723ac433}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="游戏引擎\断言器">
+      <UniqueIdentifier>{9e0bcb6e-36e7-46ba-a278-16a53af95daf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="游戏引擎\单例模板">
+      <UniqueIdentifier>{9f2ff7f4-5b10-4a67-a862-3d438aac0433}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI控件">
+      <UniqueIdentifier>{5acaef8e-7d0b-4c80-a356-146992351783}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI控件\窗口">
+      <UniqueIdentifier>{599a496b-8afe-4f5c-a565-3c471c9ed3ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI控件\视图">
+      <UniqueIdentifier>{881bf95b-017a-48ae-b853-7600f8880802}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="游戏引擎\结构体">
+      <UniqueIdentifier>{d1c4c27f-f688-4c58-8e3e-7b9ecd272593}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI控件\基类">
+      <UniqueIdentifier>{7c560660-b0b3-486e-84c8-8f04fffc9b7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI控件\UI管理器">
+      <UniqueIdentifier>{d5c1a091-4fcb-4f8b-9718-bf3cd7964342}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI控件\UiTypes">
+      <UniqueIdentifier>{54ac1d57-b42c-4530-9e64-435586393456}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI控件\菜单">
+      <UniqueIdentifier>{6d27d12e-0ec1-4e29-9d8f-a7ca0614a30c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Win32Utils.cpp">
+      <Filter>外部工具\Win32工具</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\GString.cpp">
+      <Filter>外部工具\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\Value.cpp">
+      <Filter>外部工具\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryPool\gbMemoryPool.cpp">
+      <Filter>外部工具\MemoryPool</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryManager\MemoryPool.cpp">
+      <Filter>游戏引擎\内存管理</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryManager\MemoryPoolSystem.cpp">
+      <Filter>游戏引擎\内存管理</Filter>
+    </ClCompile>
+    <ClCompile Include="Vec.cpp">
+      <Filter>游戏引擎\结构体</Filter>
+    </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>游戏引擎\结构体</Filter>
+    </ClCompile>
+    <ClCompile Include="GView.cpp">
+      <Filter>UI控件\视图</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiBase.cpp">
+      <Filter>UI控件\基类</Filter>
+    </ClCompile>
+    <ClCompile Include="GWnd.cpp">
+      <Filter>UI控件\窗口</Filter>
+    </ClCompile>
+    <ClCompile Include="GGuiWnd.cpp">
+      <Filter>UI控件\窗口</Filter>
+    </ClCompile>
+    <ClCompile Include="GGameWnd.cpp">
+      <Filter>UI控件\窗口</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Win32Utils.h">
+      <Filter>外部工具\Win32工具</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\GString.h">
+      <Filter>外部工具\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\Value.h">
+      <Filter>外部工具\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryPool\gbMemoryPool.h">
+      <Filter>外部工具\MemoryPool</Filter>
+    </ClInclude>
+    <ClInclude Include="GWnd.h">
+      <Filter>UI控件\窗口</Filter>
+    </ClInclude>
+    <ClInclude Include="Ref.h">
+      <Filter>游戏引擎\内存管理</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryManager\MemoryPool.h">
+      <Filter>游戏引擎\内存管理</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryManager\MemoryPoolSystem.h">
+      <Filter>游戏引擎\内存管理</Filter>
+    </ClInclude>
+    <ClInclude Include="GBASSERT.h">
+      <Filter>游戏引擎\断言器</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleInstance\SingleInstance.h">
+      <Filter>游戏引擎\单例模板</Filter>
+    </ClInclude>
+    <ClInclude Include="GView.h">
+      <Filter>UI控件\视图</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec.h">
+      <Filter>游戏引擎\结构体</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>游戏引擎\结构体</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiBase.h">
+      <Filter>UI控件\基类</Filter>
+    </ClInclude>
+    <ClInclude Include="GGuiWnd.h">
+      <Filter>UI控件\窗口</Filter>
+    </ClInclude>
+    <ClInclude Include="GGameWnd.h">
+      <Filter>UI控件\窗口</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiDefineTypes.h">
+      <Filter>UI控件\UiTypes</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
