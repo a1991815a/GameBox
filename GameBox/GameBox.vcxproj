@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{948F3A74-3616-48DE-9C0D-32202BB84E80}</ProjectGuid>
+    <RootNamespace>GameBox</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(WindowsSdkDir)include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(WindowsSdkDir)lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Application.h" />
+    <ClInclude Include="D3DXInputEngine.h" />
+    <ClInclude Include="D3DXRenderEngine.h" />
+    <ClInclude Include="GameMacro.h" />
+    <ClInclude Include="GDebugEngine.h" />
+    <ClInclude Include="DXMathUtils.h" />
+    <ClInclude Include="DXUtils.h" />
+    <ClInclude Include="GameHeader.h" />
+    <ClInclude Include="GCALLBACK.h" />
+    <ClInclude Include="GCamera.h" />
+    <ClInclude Include="GCameraFP.h" />
+    <ClInclude Include="GEngineHeader.h" />
+    <ClInclude Include="GEvent.h" />
+    <ClInclude Include="GEventTypes.h" />
+    <ClInclude Include="GListener.h" />
+    <ClInclude Include="GListenerKeyboard.h" />
+    <ClInclude Include="GListenerMouse.h" />
+    <ClInclude Include="GMaterial.h" />
+    <ClInclude Include="GObject.h" />
+    <ClInclude Include="GObjectTypes.h" />
+    <ClInclude Include="GRenderableObject.h" />
+    <ClInclude Include="GSingleInstance.h" />
+    <ClInclude Include="GTerrian.h" />
+    <ClInclude Include="GVertex.h" />
+    <ClInclude Include="Map.hpp" />
+    <ClInclude Include="MemoryPool.h" />
+    <ClInclude Include="MemoryPoolManager.h" />
+    <ClInclude Include="GEventDispatcher.h" />
+    <ClInclude Include="nocopy.h" />
+    <ClInclude Include="ObjectPool.hpp" />
+    <ClInclude Include="Rect2D.h" />
+    <ClInclude Include="Rect3D.h" />
+    <ClInclude Include="Ref.h" />
+    <ClInclude Include="Size.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="TextureCache.h" />
+    <ClInclude Include="Vector.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="D3DXInputEngine.cpp" />
+    <ClCompile Include="D3DXRenderEngine.cpp" />
+    <ClCompile Include="GDebugEngine.cpp" />
+    <ClCompile Include="DXMathUtils.cpp" />
+    <ClCompile Include="DXUtils.cpp" />
+    <ClCompile Include="GCamera.cpp" />
+    <ClCompile Include="GCameraFP.cpp" />
+    <ClCompile Include="GEvent.cpp" />
+    <ClCompile Include="GListener.cpp" />
+    <ClCompile Include="GListenerKeyboard.cpp" />
+    <ClCompile Include="GListenerMouse.cpp" />
+    <ClCompile Include="GMaterial.cpp" />
+    <ClCompile Include="GEventDispatcher.cpp" />
+    <ClCompile Include="GRenderableObject.cpp" />
+    <ClCompile Include="GTerrian.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MemoryPool.cpp" />
+    <ClCompile Include="MemoryPoolManager.cpp" />
+    <ClCompile Include="Rect2D.cpp" />
+    <ClCompile Include="Rect3D.cpp" />
+    <ClCompile Include="Ref.cpp" />
+    <ClCompile Include="Size.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TextureCache.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
