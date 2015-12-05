@@ -201,13 +201,9 @@ bool D3DXInputEngine::getKeyState(unsigned char key) const {
 
 void D3DXInputEngine::PostKeyboardEvent() const
 {
-	if (m_pfnKeyDown == nullptr)
-		return;
-
 	for (size_t i = 0; i < KEY_COUNT; ++i)
 	{
-		if (!(m_pPreKeyStateArray[i] & 0x80) &&
-			m_pCurKeyStateArray[i] & 0x80)
+		if (m_pCurKeyStateArray[i] & 0x80)
 			m_pfnKeyDown((unsigned char)i);
 		else if (m_pPreKeyStateArray[i] & 0x80 &&
 			!(m_pCurKeyStateArray[i] & 0x80))

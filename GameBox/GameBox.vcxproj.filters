@@ -75,12 +75,6 @@
     <Filter Include="GameBox\管理器">
       <UniqueIdentifier>{5647ffab-522d-49d3-8afb-36ee6f19899b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameBox\管理器\内存引用管理器">
-      <UniqueIdentifier>{d0b2a79f-f64b-4105-9ea3-1b79f603d9b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameBox\管理器\内存引用管理器\管理容器">
-      <UniqueIdentifier>{e283801a-2004-43c9-8519-bad658500f25}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameBox\建模\不可复制基类">
       <UniqueIdentifier>{f4fa8fc7-d418-4d6e-807a-4856d1686d17}</UniqueIdentifier>
     </Filter>
@@ -107,6 +101,15 @@
     </Filter>
     <Filter Include="GameBox\引擎\Debug引擎">
       <UniqueIdentifier>{ccf4dfdf-f717-4127-9849-db34b8cbbc95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameBox\管理器\内存引用管理器">
+      <UniqueIdentifier>{d0b2a79f-f64b-4105-9ea3-1b79f603d9b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameBox\管理器\内存引用管理器\管理容器">
+      <UniqueIdentifier>{e283801a-2004-43c9-8519-bad658500f25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameBox\类型与状态枚举">
+      <UniqueIdentifier>{d03c30f0-07c2-4420-addf-2c147af0d30d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -221,6 +224,12 @@
     <ClInclude Include="GameMacro.h">
       <Filter>GameBox\头文件</Filter>
     </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>GameBox\建模\状态机模型</Filter>
+    </ClInclude>
+    <ClInclude Include="StateEnum.h">
+      <Filter>GameBox\类型与状态枚举</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -297,6 +306,9 @@
     </ClCompile>
     <ClCompile Include="GDebugEngine.cpp">
       <Filter>GameBox\引擎\Debug引擎</Filter>
+    </ClCompile>
+    <ClCompile Include="StateMachine.cpp">
+      <Filter>GameBox\建模\状态机模型</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

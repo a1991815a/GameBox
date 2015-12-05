@@ -1,6 +1,7 @@
 #include "GEventDispatcher.h"
 #include "D3DXInputEngine.h"
 #include "Application.h"
+#include "GDebugEngine.h"
 
 #pragma warning(push)
 #pragma warning(disable:4800)
@@ -34,7 +35,7 @@ GEventDispatcher::GEventDispatcher()
 	_dxInputEngine->RegisterKeyUp(GCALLBACK_1(GEventDispatcher::ReceiveKeyUp, this));
 	_dxInputEngine->RegisterMouseButton(GCALLBACK_2(GEventDispatcher::ReceiveMouseButton, this));
 	_dxInputEngine->RegisterMouseMove(GCALLBACK_2(GEventDispatcher::ReceiveMouseMove, this));
-	_dxInputEngine->RegisterKeyDown(GCALLBACK_1(GEventDispatcher::ReceiveMouseWheel, this));
+	_dxInputEngine->RegisterMouseWheel(GCALLBACK_1(GEventDispatcher::ReceiveMouseWheel, this));
 }
 
 GEventDispatcher::~GEventDispatcher()
@@ -44,13 +45,18 @@ GEventDispatcher::~GEventDispatcher()
 
 void GEventDispatcher::DispatcherAll()
 {
-	auto event_itor = m_vEventVector.begin();
+	std::vector<GEvent*>::iterator event_itor = m_vEventVector.begin();
 	for (; event_itor != m_vEventVector.end(); ++event_itor)
 	{
-		auto itor = m_mListenerMap.begin();
-		for (; itor != m_mListenerMap.end(); ++itor)
-			if (itor->second->Trigger(*event_itor))
+		std::vector<GListener*>::iterator itor = m_mListenerVector.begin();
+		for (; itor != m_mListenerVector.end(); ++itor)
+		{
+			if ((*itor)->Trigger(*event_itor))
 				break;
+// 			GLOG_INFO("Event: %d, Listener:%s \n",
+// 				(*event_itor)->getEventId(), (*itor)->getName().c_str());
+		}
+		
 		m_opEventPool.deallocate(*event_itor);
 	}
 	m_vEventVector.clear();
@@ -60,28 +66,8 @@ void GEventDispatcher::ReadyEvent()
 {
 	//准备好信息
 	_dxInputEngine->loop();
-
-	//准备好按键事件
-	auto itor = m_vKeyDownVector.begin();
-	for (; itor != m_vKeyDownVector.end(); ++itor)
-	{
-		switch (*itor)
-		{
-		case DIMOFS_BUTTON0:
-		case DIMOFS_BUTTON1:
-		case DIMOFS_BUTTON2:
-		case DIMOFS_BUTTON3:
-		case DIMOFS_BUTTON4:
-		case DIMOFS_BUTTON5:
-		case DIMOFS_BUTTON6:
-		case DIMOFS_BUTTON7:
-			PostEvent(ET_MOUSEDOWN, *itor);
-			break;
-		default:
-			PostEvent(ET_KEYDOWN, *itor);
-			break;
-		}
-	}
+	if (m_piMouseMove.x != 0 || m_piMouseMove.y != 0)
+		PostEvent(ET_MOUSEMOVE);
 }
 
 void GEventDispatcher::PostEvent(int m_iEventId, DWORD m_dwParam /*= 0*/, void* m_pData /*= nullptr*/)
@@ -91,6 +77,7 @@ void GEventDispatcher::PostEvent(int m_iEventId, DWORD m_dwParam /*= 0*/, void* 
 	{
 		m_opEventPool.reserve(m_opEventPool.size() * 2);
 		_event = m_opEventPool.allocate();
+		GLOG_INFO("Pool对象池生长... \n");
 	}
 	_event->m_iEventId = m_iEventId;
 	_event->m_dwParam = m_dwParam;
@@ -100,39 +87,12 @@ void GEventDispatcher::PostEvent(int m_iEventId, DWORD m_dwParam /*= 0*/, void* 
 
 void GEventDispatcher::PostKeyDown(DWORD wParam)
 {
-	auto itor = m_vKeyDownVector.begin();
-	for (; itor != m_vKeyDownVector.end(); ++itor)
-		if (*itor == wParam)
-			return;
-	m_vKeyDownVector.push_back(wParam);
+	PostEvent(ET_KEYDOWN, wParam);
 }
 
 void GEventDispatcher::PostKeyUp(DWORD wParam)
 {
-	auto itor = m_vKeyDownVector.begin();
-	for (; itor != m_vKeyDownVector.end(); ++itor)
-		if (*itor == wParam)
-		{
-			m_vKeyDownVector.erase(itor);
-			break;
-		}
-	switch (wParam)
-	{
-	case DIMOFS_BUTTON0:
-	case DIMOFS_BUTTON1:
-	case DIMOFS_BUTTON2:
-	case DIMOFS_BUTTON3:
-	case DIMOFS_BUTTON4:
-	case DIMOFS_BUTTON5:
-	case DIMOFS_BUTTON6:
-	case DIMOFS_BUTTON7:
-		PostEvent(ET_MOUSEUP, wParam);
-		break;
-	default:
-		PostEvent(ET_KEYUP, wParam);
-		break;
-	}
-
+	PostEvent(ET_KEYUP, wParam);
 }
 
 bool GEventDispatcher::getKeyState(int key)
@@ -142,35 +102,74 @@ bool GEventDispatcher::getKeyState(int key)
 
 void GEventDispatcher::addListener(GListener* listener)
 {
-	GTHROW_RUNTIME(!listener->getName().empty(), "Listener Name is Null!");
-	m_mListenerMap.insert(decltype(m_mListenerMap)::value_type(listener->getName(), listener));
+	GASSERT(listener, "Listener is Null!");
+	m_mListenerVector.push_back(listener);
 }
 
 void GEventDispatcher::removeListener(const std::string& name)
 {
-	auto itor = m_mListenerMap.find(name);
-	GTHROW_RUNTIME(itor != m_mListenerMap.end(), "The Listener is not in map!");
-	m_mListenerMap.erase(itor);
+	GASSERT(name.size(), "removeListener: Name is Null!");
+	auto itor = m_mListenerVector.begin();
+	for (; itor != m_mListenerVector.end(); ++itor)
+	{
+		if ((*itor)->getName() == name)
+		{
+			m_mListenerVector.erase(itor);
+			return;
+		}
+	}
+
+	GTHROW_RUNTIME(false, "The Listener is not in Vector!");
 }
 
 void GEventDispatcher::removeListener(GListener* listener)
 {
-	auto itor = m_mListenerMap.find(listener->getName());
-	GTHROW_RUNTIME(itor != m_mListenerMap.end(), "The Listener is not in map!");
-	m_mListenerMap.erase(itor);
+	GASSERT(listener, "removeListener: Listener is Null!");
+	auto itor = m_mListenerVector.begin();
+	for (; itor != m_mListenerVector.end(); ++itor)
+	{
+		if (*itor == listener)
+		{
+			m_mListenerVector.erase(itor);
+			return;
+		}
+	}
+	GTHROW_RUNTIME(false, "The Listener is not in Vector!");
 }
 
 void GEventDispatcher::removeListener_Safe(GListener* listener)
 {
-	auto itor = m_mListenerMap.find(listener->getName());
-	if(itor != m_mListenerMap.end())
-		m_mListenerMap.erase(itor);
+	GASSERT(listener, "removeListener: Listener is Null!");
+	auto itor = m_mListenerVector.begin();
+	for (; itor != m_mListenerVector.end(); ++itor)
+	{
+		if (*itor == listener)
+		{
+			m_mListenerVector.erase(itor);
+			return;
+		}
+	}
+}
+
+void GEventDispatcher::removeListener_Safe(const std::string& name)
+{
+	GASSERT(name.size(), "removeListener: Name is Null!");
+	auto itor = m_mListenerVector.begin();
+	for (; itor != m_mListenerVector.end(); ++itor)
+	{
+		if ((*itor)->getName() == name)
+		{
+			m_mListenerVector.erase(itor);
+			return;
+		}
+	}
 }
 
 void GEventDispatcher::loop()
 {
 	ReadyEvent();
 	DispatcherAll();
+	m_piMouseMove.x = m_piMouseMove.y = 0;
 }
 
 void GEventDispatcher::ReceiveKeyDown(unsigned char key)
@@ -186,9 +185,9 @@ void GEventDispatcher::ReceiveKeyUp(unsigned char key)
 void GEventDispatcher::ReceiveMouseButton(DWORD dwType, DWORD dwData)
 {
 	if (dwData & 0x80)
-		PostKeyDown(dwType);
+		PostEvent(ET_MOUSEDOWN, dwType);
 	else
-		PostKeyUp(dwType);
+		PostEvent(ET_MOUSEUP, dwType);
 }
 
 void GEventDispatcher::ReceiveMouseMove(DWORD dwType, DWORD dwData)
@@ -196,10 +195,10 @@ void GEventDispatcher::ReceiveMouseMove(DWORD dwType, DWORD dwData)
 	switch (dwType)
 	{
 	case DIMOFS_X:
-		m_piMouseMove.x = (float)dwData;
+		m_piMouseMove.x = (float)(int)dwData;
 		break;
 	case DIMOFS_Y:
-		m_piMouseMove.y = (float)dwData;
+		m_piMouseMove.y = (float)(int)dwData;
 		break;
 	default:
 		break;

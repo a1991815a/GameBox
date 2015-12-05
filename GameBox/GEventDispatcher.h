@@ -28,6 +28,7 @@ public:
 	void removeListener(const std::string& name);
 	void removeListener(GListener* listener);
 	void removeListener_Safe(GListener* listener);
+	void removeListener_Safe(const std::string& name);
 
 	void loop();
 
@@ -40,9 +41,7 @@ public:
 private:
 	ObjectPool<GEvent*>		m_opEventPool;			//消息池
 	std::vector<GEvent*>	m_vEventVector;			//消息队列
-	std::unordered_map<std::string, GListener*>
-							m_mListenerMap;			//监听者列表
-	std::vector<DWORD>		m_vKeyDownVector;		//按键状态(包括鼠标按键状态)
+	std::vector<GListener*>	m_mListenerVector;		//监听者列表
 	Point					m_piLocation;			//鼠标当前窗口坐标
 	Point					m_piMouseMove;			//本次鼠标位移
 };

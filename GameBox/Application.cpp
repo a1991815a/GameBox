@@ -8,8 +8,9 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	for (size_t i = 0; i < dxGetApp()->m_vFuncVector.size(); ++i)
-		if(dxGetApp()->m_vFuncVector.at(i)(hwnd, message, wParam, lParam))
+	auto app = dxGetApp();
+	for (size_t i = 0; i < app->m_vFuncVector.size(); ++i)
+		if(app->m_vFuncVector.at(i)(hwnd, message, wParam, lParam))
 			return 0;
 
 
@@ -22,6 +23,19 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		WinDestroy();
 		PostQuitMessage(0);
+		break;
+	case WM_ACTIVATE:
+		switch (wParam)
+		{
+		case WA_ACTIVE:
+			app->SetState(AS_NORMAL);
+			break;
+		case WA_INACTIVE:
+			app->SetState(AS_PAUSE);
+			break;
+		default:
+			break;
+		}
 		break;
 	default:
 		return ::DefWindowProcA(hwnd, message, wParam, lParam);
@@ -45,6 +59,10 @@ Application::Application(const char* wnd_name, size_t x, size_t y, size_t cx, si
 	m_clsRect.bottom = cy;
 	m_sName = wnd_name;
 	m_instance = this;
+
+	RegisteState(AS_NORMAL, BIND_STATE_FUNC(Application::RunNormal));
+	RegisteState(AS_PAUSE, BIND_STATE_FUNC(Application::RunPause));
+	SetState(AS_NORMAL);
 }
 
 Application::~Application()
@@ -87,12 +105,14 @@ int Application::run()
 	MSG msg = { 0 };
 	while (msg.message != WM_QUIT)
 	{
-		if(PeekMessageA(&msg, nullptr, 0, 0, PM_REMOVE))
-		{
-			TranslateMessage(&msg);
-			DispatchMessageA(&msg);
-		}else
-			WinDraw();
+//		使用状态机来执行循环内容
+// 		if(PeekMessageA(&msg, nullptr, 0, 0, PM_REMOVE))
+// 		{
+// 			TranslateMessage(&msg);
+// 			DispatchMessageA(&msg);
+// 		}else
+// 			WinDraw();
+		RunMachine((void*)&msg);
 	}
 
 	return msg.wParam;
@@ -106,4 +126,28 @@ const std::string& Application::getName() const
 void Application::pushProcess(WinProcFunc_t func)
 {
 	m_vFuncVector.push_back(func);
+}
+
+void Application::RunNormal(void* msg)
+{
+	MSG* in_msg = (MSG*)msg;
+	if (PeekMessageA(in_msg, nullptr, 0, 0, PM_REMOVE))	
+	{
+		TranslateMessage(in_msg);
+		DispatchMessageA(in_msg);
+	}
+	else if(getState() != AS_PAUSE)
+		WinDraw();
+}
+
+void Application::RunPause(void* msg)
+{
+	MSG* in_msg = (MSG*)msg;
+	if (PeekMessageA(in_msg, nullptr, 0, 0, PM_REMOVE))
+	{
+		TranslateMessage(in_msg);
+		DispatchMessageA(in_msg);
+	}
+	else
+		Sleep(1);
 }

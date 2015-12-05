@@ -103,6 +103,8 @@
     <ClInclude Include="Rect3D.h" />
     <ClInclude Include="Ref.h" />
     <ClInclude Include="Size.h" />
+    <ClInclude Include="StateEnum.h" />
+    <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureCache.h" />
     <ClInclude Include="Vector.hpp" />
@@ -131,6 +133,7 @@
     <ClCompile Include="Rect3D.cpp" />
     <ClCompile Include="Ref.cpp" />
     <ClCompile Include="Size.cpp" />
+    <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureCache.cpp" />
   </ItemGroup>

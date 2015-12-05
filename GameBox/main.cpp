@@ -7,6 +7,7 @@
 #include "GEventDispatcher.h"
 #include <iostream>
 #include "D3DXInputEngine.h"
+#include "GListenerMouse.h"
 using namespace std;
 
 GTerrian* ter;
@@ -35,11 +36,52 @@ bool WinCreate(HWND hwnd){
 	GListenerKeyboard* listener = new GListenerKeyboard();
 	listener->setName("aa");
 	listener->OnKeyDown = [](GEvent* e) {
-
-		cout << e->getParam() << endl;
+		switch (e->getParam())
+		{
+		case DIK_UP:
+			fp->MoveZ(1);
+			break;
+		case DIK_DOWN:
+			fp->MoveZ(-1);
+			break;
+		case DIK_LEFT:
+			fp->MoveX(-1);
+			break;
+		case DIK_RIGHT:
+			fp->MoveX(1);
+			break;
+		case DIK_E:
+			fp->RotateY(0.03);
+			break;
+		case DIK_Q:
+			fp->RotateY(-0.03);
+			break;
+		case DIK_W:
+			fp->RotateX(-0.03);
+			break;
+		case DIK_S:
+			fp->RotateX(0.03);
+			break;
+		default:
+			break;
+		}
 		return false;
 	};
+
+	GListenerMouse* mouse = new GListenerMouse();
+	mouse->OnMouseMove = [](GEvent* e) {
+		Point point = e->getMouseMove();
+		if (GetAsyncKeyState(VK_RBUTTON))
+		{
+			fp->RotateY(point.x * 0.02f);
+			fp->RotateX(point.y * 0.02f);
+		}
+		return true;
+	};
+	_eventDispatcher->addListener(mouse);
+
 	_eventDispatcher->addListener(listener);
+	
 
 	return true;
 };
